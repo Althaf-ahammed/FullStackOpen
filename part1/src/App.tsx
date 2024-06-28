@@ -3,9 +3,18 @@ import React from "react";
 interface HeaderProps {
   course: string;
 }
-interface ContentProps {
+interface PartProps {
   part: string;
   exercise: number;
+}
+
+interface ContentProps {
+  part1: string;
+  exercises1: number;
+  part2: string;
+  exercises2: number;
+  part3: string;
+  exercises3: number;
 }
 
 interface totalProps {
@@ -16,11 +25,21 @@ const Header: React.FC<HeaderProps> = ({ course }) => {
   return <h1>{course}</h1>;
 };
 
-const Content: React.FC<ContentProps> = ({ part, exercise }) => {
+const Part: React.FC<PartProps> = ({ part, exercise }) => {
   return (
     <p>
       {part} {exercise}
     </p>
+  );
+};
+
+const Content: React.FC<ContentProps> = (props) => {
+  return (
+    <>
+      <Part part={props.part1} exercise={props.exercises1} />
+      <Part part={props.part2} exercise={props.exercises2} />
+      <Part part={props.part3} exercise={props.exercises3} />
+    </>
   );
 };
 
@@ -41,9 +60,14 @@ const App: React.FC = () => {
   return (
     <div>
       <Header course={course} />
-      <Content part={part1} exercise={exercises1} />
-      <Content part={part2} exercise={exercises2} />
-      <Content part={part3} exercise={exercises3} />
+      <Content
+        part1={part1}
+        exercises1={exercises1}
+        part2={part2}
+        exercises2={exercises2}
+        part3={part3}
+        exercises3={exercises3}
+      />
       <Total total={total} />
     </div>
   );
