@@ -1,10 +1,9 @@
-
-function StatisticLine({title,value}) {
+function StatisticLine({ title, value }) {
   return (
-    <div>
-        <p>{title} {value}</p>
-    </div>
-  )
+    <tr>
+      <td>{title}</td><td>{value}</td>
+    </tr>
+  );
 }
 
-export default StatisticLine
+export default StatisticLine;

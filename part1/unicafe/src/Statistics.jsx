@@ -21,14 +21,16 @@ const Statistics = ({
         {total === 0 ? (
           <p>No feedback given</p>
         ) : (
-          <>
+          <table>
+            <tbody>
             <StatisticLine title={'good'} value={good} />
             <StatisticLine title={'neutral'} value={neutral} />
             <StatisticLine title={'bad'} value={bad} />
             <StatisticLine title={'all'} value={total} />
             <StatisticLine title={'average'} value={totalScore / total} />
             <StatisticLine title={'positive'} value={`${(good / total) * 100} % `} />
-          </>
+            </tbody>
+          </table>
         )}
       </>
     );
