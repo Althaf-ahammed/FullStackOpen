@@ -17,6 +17,10 @@ const App = () => {
   const handlebadbutton = () => {
     setBad(bad + 1);
   };
+
+  const totalScore = good  - bad
+  const total = good + neutral + bad
+
   return (
     <div>
       <h1>give feedback</h1>
@@ -27,6 +31,9 @@ const App = () => {
       <p>good {good}</p>
       <p>neutral {neutral}</p>
       <p>bad {bad}</p>
+      <p>all {total}</p>
+      <p>average {totalScore/total}</p>
+      <p>positive {(good/total)*100} %</p>
     </div>
   );
 };
