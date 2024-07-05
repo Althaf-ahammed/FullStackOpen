@@ -1,38 +1,5 @@
 import { useState } from "react";
-import Button from "./Button";
-
-const Statistics = ({
-  handlegoodbutton,
-  handleneutralbutton,
-  handlebadbutton,
-  good,
-  neutral,
-  bad,
-  totalScore,
-  total,
-}) => {
-  return (
-    <>
-      <h1>give feedback</h1>
-      <Button title={"good"} handleClick={handlegoodbutton} />
-      <Button title={"neutral"} handleClick={handleneutralbutton} />
-      <Button title={"bad"} handleClick={handlebadbutton} />
-      <h2>statistics</h2>
-      {total === 0 ? (
-        <p>No feedback given</p>
-      ) : (
-        <>
-          <p>good {good}</p>
-          <p>neutral {neutral}</p>
-          <p>bad {bad}</p>
-          <p>all {total}</p>
-          <p>average {totalScore / total}</p>
-          <p>positive {(good / total) * 100} %</p>
-        </>
-      )}
-    </>
-  );
-};
+import Statistics from "./Statistics";
 
 const App = () => {
   // save clicks of each button to its own state
