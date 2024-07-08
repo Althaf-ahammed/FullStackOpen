@@ -1,4 +1,3 @@
-
 const Header = ({ course }) => {
   return <h1>{course}</h1>;
 };
@@ -9,7 +8,21 @@ const Content = (props) => {
       <Part part={props.parts[0].name} exercise={props.parts[0].exercises} />
       <Part part={props.parts[1].name} exercise={props.parts[1].exercises} />
       <Part part={props.parts[2].name} exercise={props.parts[2].exercises} />
+      <Part part={props.parts[3].name} exercise={props.parts[3].exercises} />
     </>
+  );
+};
+
+const Total = (props) => {
+  return (
+    <h3>
+      total of{" "}
+      {props.parts[0].exercises +
+        props.parts[1].exercises +
+        props.parts[2].exercises +
+        props.parts[3].exercises }{" "}
+      exercises
+    </h3>
   );
 };
 
@@ -26,6 +39,7 @@ const Course = ({ course }) => {
     <>
       <Header course={course.name} />
       <Content parts={course.parts} />
+      <Total parts={course.parts} />
     </>
   );
 };
@@ -49,6 +63,11 @@ const App = () => {
         name: "State of a component",
         exercises: 14,
         id: 3,
+      },
+      {
+        name: "Redux",
+        exercises: 11,
+        id: 4,
       },
     ],
   };
