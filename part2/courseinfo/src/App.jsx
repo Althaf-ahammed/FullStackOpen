@@ -13,17 +13,11 @@ const Content = (props) => {
   );
 };
 
-const Total = (props) => {
-  return (
-    <h3>
-      total of{" "}
-      {props.parts[0].exercises +
-        props.parts[1].exercises +
-        props.parts[2].exercises +
-        props.parts[3].exercises }{" "}
-      exercises
-    </h3>
-  );
+const Total = ({ parts }) => {
+  const total = parts.reduce((sum, part) => sum + part.exercises, 0);
+
+  console.log(parts);
+  return <h3>total of {total} exercises</h3>;
 };
 
 const Part = ({ part, exercise }) => {
