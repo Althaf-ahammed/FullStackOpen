@@ -1,4 +1,7 @@
 import { useState } from "react";
+import Filter from "./Filter";
+import AddPeople from "./AddPeople";
+import ShowPeople from "./ShowPeople";
 
 const App = () => {
   const [persons, setPersons] = useState([
@@ -12,7 +15,6 @@ const App = () => {
   const [filter, setNewFilter] = useState("");
   const [personsToShow, setPersonsToShow] = useState(persons);
 
-
   const handleChange = (event) => {
     setNewName(event.target.value);
   };
@@ -24,7 +26,14 @@ const App = () => {
       alert(`${newName} is already added to phonebook`);
     } else {
       const personObject = { name: newName, number: newNumber };
-      setPersons(persons.concat(personObject));
+      const newPersons = persons.concat(personObject);
+      setPersons(newPersons);
+
+      const filteredPersons = newPersons.filter((person) =>
+        person.name.toLowerCase().includes(filter.toLowerCase())
+      );
+
+      setPersonsToShow(filteredPersons);
       setNewName("");
       setNewNumber("");
     }
@@ -43,35 +52,20 @@ const App = () => {
     setPersonsToShow(filteredPersons);
   };
 
-  
-
   return (
     <div>
       <h2>Phonebook</h2>
-      <div>
-        filter shown with
-        <input value={filter} onChange={handleFilter} />
-      </div>
+      <Filter filter={filter} handleFilter={handleFilter} />
       <h2>add a new</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          name: <input value={newName} onChange={handleChange} />
-          <div>
-            number: <input value={newNumber} onChange={handleNumberChange} />
-          </div>
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
+      <AddPeople
+        handleSubmit={handleSubmit}
+        newName={newName}
+        handleChange={handleChange}
+        newNumber={newNumber}
+        handleNumberChange={handleNumberChange}
+      />
       <h2>Numbers</h2>
-      <div>
-        {personsToShow.map((person) => (
-          <p key={person.name}>
-            {person.name} {person.number}
-          </p>
-        ))}
-      </div>
+      <ShowPeople personsToShow={personsToShow} />
     </div>
   );
 };
