@@ -34,7 +34,7 @@ const App = () => {
     if (checkPerson) {
       alert(`${newName} is already added to phonebook`);
     } else {
-      const personObject = { name: newName, number: newNumber,id: "4" };
+      const personObject = { name: newName, number: newNumber };
       const newPersons = persons.concat(personObject);
       setPersons(newPersons);
       phonebookServices.create(personObject)
@@ -63,6 +63,23 @@ const App = () => {
     setPersonsToShow(filteredPersons);
   };
 
+  const handleDelete = (id,name) => {
+    if (window.confirm(`Delete ${name} ?`)) {
+      phonebookServices.remove(id)
+        .then(() => {
+          const newPersons = persons.filter(person => person.id !== id);
+          setPersons(newPersons);
+
+          const filteredPersons = newPersons.filter((person) =>
+            person.name.toLowerCase().includes(filter.toLowerCase())
+          );
+
+          setPersonsToShow(filteredPersons);
+        });
+
+    }
+  }
+
   return (
     <div>
       <h2>Phonebook</h2>
@@ -76,7 +93,7 @@ const App = () => {
         handleNumberChange={handleNumberChange}
       />
       <h2>Numbers</h2>
-      <ShowPeople personsToShow={personsToShow} />
+      <ShowPeople personsToShow={personsToShow} handleDelete={handleDelete} /> 
     </div>
   );
 };
