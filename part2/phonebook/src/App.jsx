@@ -32,7 +32,22 @@ const App = () => {
     event.preventDefault();
     const checkPerson = persons.find((person) => person.name === newName);
     if (checkPerson) {
-      alert(`${newName} is already added to phonebook`);
+      if (window.confirm(`${checkPerson.name} is already added to phonebook, replace the old number with a new one`)) {
+        const updatedPerson = { ...checkPerson, number: newNumber }
+        phonebookServices.numberUpdate(checkPerson.id, updatedPerson)
+        .then(updatedPersonData => {
+          setPersons(persons.map(person => person.id !== checkPerson.id ? person : updatedPersonData));
+          setPersonsToShow(
+            persons.map(person => person.id !== checkPerson.id ? person : updatedPersonData)
+              .filter(person =>
+                person.name.toLowerCase().includes(filter.toLowerCase())
+              )
+          );
+          setNewName("");
+          setNewNumber("");
+        })
+      }
+
     } else {
       const personObject = { name: newName, number: newNumber };
       const newPersons = persons.concat(personObject);
@@ -76,7 +91,6 @@ const App = () => {
 
           setPersonsToShow(filteredPersons);
         });
-
     }
   }
 
