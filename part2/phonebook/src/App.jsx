@@ -36,9 +36,13 @@ const App = () => {
     if (checkPerson) {
       alert(`${newName} is already added to phonebook`);
     } else {
-      const personObject = { name: newName, number: newNumber };
+      const personObject = { name: newName, number: newNumber,id: "4" };
       const newPersons = persons.concat(personObject);
       setPersons(newPersons);
+
+      axios.post('http://localhost:3001/persons',personObject).then(response => {
+        console.log('response',response);
+      })
 
       const filteredPersons = newPersons.filter((person) =>
         person.name.toLowerCase().includes(filter.toLowerCase())
