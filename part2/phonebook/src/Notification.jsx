@@ -1,11 +1,8 @@
-
-function Notification({message}) {
-if (message === null) {
-    return null
-}
-  return (
-    <div className="success">{message}</div>
-  )
+function Notification({ message }) {
+  if (message === null) {
+    return null;
+  }
+  return <div className={`${message.type}`}>{message.message}</div>;
 }
 
-export default Notification
+export default Notification;
