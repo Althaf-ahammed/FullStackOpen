@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import countriesService from "./services/countries";
 import ShowCountry from "./ShowCountry";
+import WeatherCard from "./WeatherCard";
 
 function App() {
   const [newCountry, setNewCountry] = useState("");
@@ -26,10 +27,12 @@ function App() {
     setNewCountry(e.target.value);
   };
 
-const handleShowClick = (countryName) => {
-  const filteredCountry = allCountries.filter(country => country.name.common === countryName)
-  setCountriesToShow(filteredCountry)
-}
+  const handleShowClick = (countryName) => {
+    const filteredCountry = allCountries.filter(
+      (country) => country.name.common === countryName
+    );
+    setCountriesToShow(filteredCountry);
+  };
 
   return (
     <div>
@@ -40,10 +43,24 @@ const handleShowClick = (countryName) => {
         countriesToShow.map((country) => {
           if (countriesToShow.length === 1) {
             return (
-              <ShowCountry key={country.fifa} country={country} />
+              <div key={country.fifa}>
+                <ShowCountry country={country} />
+                <WeatherCard country={country} />
+              </div>
             );
           } else {
-            return <p key={country.fifa}>{country.name.common} <button onClick={()=>{handleShowClick(country.name.common)}}>show</button></p>;
+            return (
+              <p key={country.fifa}>
+                {country.name.common}{" "}
+                <button
+                  onClick={() => {
+                    handleShowClick(country.name.common);
+                  }}
+                >
+                  show
+                </button>
+              </p>
+            );
           }
         })
       )}
