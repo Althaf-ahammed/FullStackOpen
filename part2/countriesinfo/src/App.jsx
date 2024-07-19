@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import countriesService from "./services/countries";
+import ShowCountry from "./ShowCountry";
 
 function App() {
   const [newCountry, setNewCountry] = useState("");
@@ -24,7 +25,12 @@ function App() {
   const handleCountryChange = (e) => {
     setNewCountry(e.target.value);
   };
-  console.log(countriesToShow);
+
+const handleShowClick = (countryName) => {
+  const filteredCountry = allCountries.filter(country => country.name.common === countryName)
+  setCountriesToShow(filteredCountry)
+}
+
   return (
     <div>
       find countries <input value={newCountry} onChange={handleCountryChange} />
@@ -33,23 +39,11 @@ function App() {
       ) : (
         countriesToShow.map((country) => {
           if (countriesToShow.length === 1) {
-            const values = Object.values(country.languages);
             return (
-              <div key={country.fifa}>
-                <h2>{country.name.common}</h2>
-                <p>capital {country.capital[0]}</p>
-                <p>area {country.area}</p>
-                <h3>Languages: </h3>
-                <ul>
-                  {values.map((value, index) => (
-                    <li key={index}>{value}</li>
-                  ))}
-                </ul>
-                <img alt={country.flags.alt} src={country.flags.png}></img>
-              </div>
+              <ShowCountry key={country.fifa} country={country} />
             );
           } else {
-            return <p key={country.fifa}>{country.name.common}</p>;
+            return <p key={country.fifa}>{country.name.common} <button onClick={()=>{handleShowClick(country.name.common)}}>show</button></p>;
           }
         })
       )}
