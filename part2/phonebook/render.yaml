@@ -1,0 +1,6 @@
+services:
+  - type: static
+    name: phonebook-frontend
+    env: static
+    static_publish_path: dist
+    buildCommand: npm run build
