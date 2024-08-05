@@ -78,22 +78,21 @@ const App = () => {
       }
     } else {
       const personObject = { name: newName, number: newNumber };
-      const newPersons = persons.concat(personObject);
-      setPersons(newPersons);
-      phonebookServices.create(personObject).then(() => {
-        setMessage({ message: `Added ${personObject.name}`, type: "success" });
+      phonebookServices.create(personObject).then((createdPerson) => {
+        const newPersons = persons.concat(createdPerson);
+        setPersons(newPersons);
+        setPersonsToShow(
+          newPersons.filter((person) =>
+            person.name.toLowerCase().includes(filter.toLowerCase())
+          )
+        );
+        setNewName("");
+        setNewNumber("");
+        setMessage({ message: `Added ${createdPerson.name}`, type: "success" });
         setTimeout(() => {
           setMessage(null);
         }, 5000);
       });
-
-      const filteredPersons = newPersons.filter((person) =>
-        person.name.toLowerCase().includes(filter.toLowerCase())
-      );
-
-      setPersonsToShow(filteredPersons);
-      setNewName("");
-      setNewNumber("");
     }
   };
 
@@ -115,12 +114,11 @@ const App = () => {
       phonebookServices.remove(id).then(() => {
         const newPersons = persons.filter((person) => person.id !== id);
         setPersons(newPersons);
-
-        const filteredPersons = newPersons.filter((person) =>
-          person.name.toLowerCase().includes(filter.toLowerCase())
+        setPersonsToShow(
+          newPersons.filter((person) =>
+            person.name.toLowerCase().includes(filter.toLowerCase())
+          )
         );
-
-        setPersonsToShow(filteredPersons);
       });
     }
   };
