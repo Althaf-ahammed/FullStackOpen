@@ -78,21 +78,31 @@ const App = () => {
       }
     } else {
       const personObject = { name: newName, number: newNumber };
-      phonebookServices.create(personObject).then((createdPerson) => {
-        const newPersons = persons.concat(createdPerson);
-        setPersons(newPersons);
-        setPersonsToShow(
-          newPersons.filter((person) =>
-            person.name.toLowerCase().includes(filter.toLowerCase())
-          )
-        );
-        setNewName("");
-        setNewNumber("");
-        setMessage({ message: `Added ${createdPerson.name}`, type: "success" });
-        setTimeout(() => {
-          setMessage(null);
-        }, 5000);
-      });
+      phonebookServices
+        .create(personObject)
+        .then((createdPerson) => {
+          const newPersons = persons.concat(createdPerson);
+          setPersons(newPersons);
+          setPersonsToShow(
+            newPersons.filter((person) =>
+              person.name.toLowerCase().includes(filter.toLowerCase())
+            )
+          );
+          setNewName("");
+          setNewNumber("");
+          setMessage({
+            message: `Added ${createdPerson.name}`,
+            type: "success",
+          });
+          setTimeout(() => {
+            setMessage(null);
+          }, 5000);
+        })
+        .catch((error) => {
+          console.error(error.response.data.error);
+          setMessage({ message: error.response.data.error, type: "error" });
+          setTimeout(() => setMessage(null), 5000);
+        });
     }
   };
 
